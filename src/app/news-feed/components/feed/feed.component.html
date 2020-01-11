@@ -1,0 +1,26 @@
+<div class="newsFeed">
+    <mat-button-toggle-group #filter="matButtonToggleGroup" value="" (change)="filterNews(filter.value)">
+        <mat-button-toggle value="" aria-label="All">
+            All
+        </mat-button-toggle>
+        <mat-button-toggle value="favorites" aria-label="Favorites">
+            Favorites
+        </mat-button-toggle>
+        <mat-button-toggle value="sport" aria-label="Sport">
+            Sport
+        </mat-button-toggle>
+        <mat-button-toggle value="fashion" aria-label="Fashion">
+            Fashion
+        </mat-button-toggle>
+        <mat-button-toggle value="world" aria-label="World">
+            World
+        </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div *ngIf="news">
+        <mat-list-item>
+            <app-feed-item mat-list-item *ngFor="let article of news" [article]="article"></app-feed-item>
+        </mat-list-item>
+        <app-pagination *ngIf="filter.value!=='favorites'" class="newsFeed-pagination" [pageNumber]="currentPage" (currentPage)="changePage($event)"></app-pagination>
+    </div>
+</div>

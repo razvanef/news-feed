@@ -1,0 +1,12 @@
+.article-card {
+    max-width: 600px;
+    margin: 15px auto;
+
+    &-date {
+        float: right;
+    }
+
+    &-actions {
+        text-align: right;
+    }
+  }

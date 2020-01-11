@@ -1,0 +1,9 @@
+<div class="articleItem">
+    <h3 class="articleItem-title"
+        [routerLink]="['/article', article.id]">
+            {{article.webTitle}}
+    </h3>
+    <app-favorite class="articleItem-action"
+        [articleId]="article.id">
+    </app-favorite>
+</div>

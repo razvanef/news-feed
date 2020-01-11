@@ -1,0 +1,20 @@
+.pagination {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    
+    a {
+        display: inline-block;
+        cursor: pointer;
+        vertical-align: middle;
+        height: 24px;
+
+        &:hover {
+            color: darkgray;
+        }
+    }
+
+    b {
+        vertical-align: middle;
+    }
+}

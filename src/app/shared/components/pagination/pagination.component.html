@@ -1,0 +1,12 @@
+<div class="pagination">
+    <a (click)="setPage(1)">
+        <mat-icon>first_page</mat-icon>
+    </a>
+    <a (click)="pageNumber>1 && setPage(pageNumber-1)">
+        <mat-icon>chevron_left</mat-icon>
+    </a>
+    <b>{{pageNumber}}</b>
+    <a (click)="setPage(pageNumber+1)">
+        <mat-icon>chevron_right</mat-icon>
+    </a>
+</div>

@@ -1,0 +1,17 @@
+<mat-card class="article-card" *ngIf="article">
+    <mat-card-header class="article-card-content">
+        <mat-card-title>
+            {{article.webTitle}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            <span>{{article.sectionName}}</span>
+            <span class="article-card-date">{{article.webPublicationDate | date:'medium'}}</span>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions class="article-card-actions">
+        <a mat-raised-button [href]="article.webUrl" target="_blank">Read More</a>
+        <app-favorite
+            [articleId]="article.id">
+        </app-favorite>
+    </mat-card-actions>
+</mat-card>
