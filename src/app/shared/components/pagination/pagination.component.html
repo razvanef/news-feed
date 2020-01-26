@@ -1,12 +1,12 @@
-<div class="pagination">
+<div class="pagination" *ngIf="(pageNumber$ | async) as page">
     <a (click)="setPage(1)">
         <mat-icon>first_page</mat-icon>
     </a>
-    <a (click)="pageNumber>1 && setPage(pageNumber-1)">
+    <a (click)="page>1 && setPage(page-1)">
         <mat-icon>chevron_left</mat-icon>
     </a>
-    <b>{{pageNumber}}</b>
-    <a (click)="setPage(pageNumber+1)">
+    <b>{{page}}</b>
+    <a (click)="setPage(page+1)">
         <mat-icon>chevron_right</mat-icon>
     </a>
 </div>

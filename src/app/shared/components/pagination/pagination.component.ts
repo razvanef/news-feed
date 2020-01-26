@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { ArticlesFacade } from '@store/articles/articles.facade';
 
 @Component({
   selector: 'app-pagination',
@@ -6,12 +7,12 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent {
+  pageNumber$ = this.articlesFacade.currentPage$;
 
-  @Input() pageNumber: number;
-  @Output() currentPage = new EventEmitter<number>();
+  constructor(private articlesFacade: ArticlesFacade) {}
 
   setPage(page: number) {
-    this.currentPage.emit(page);
+    this.articlesFacade.setCurrentPage(page);
   }
 
 }

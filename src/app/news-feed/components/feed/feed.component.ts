@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Article } from '@base/core/models/article.model';
-import { NewsFeedService } from '@news/services/news-feed.service';
-import { forkJoin, from, of } from 'rxjs';
-import { concatMap, map, switchMap, toArray } from 'rxjs/operators';
+import { ArticlesFacade } from '@store/articles/articles.facade';
+
 
 @Component({
     selector: 'app-feed',
@@ -11,44 +10,34 @@ import { concatMap, map, switchMap, toArray } from 'rxjs/operators';
   })
 
 export class FeedComponent {
-    currentPage = 1;
+    currentPage: number;
     news: Article[];
     searchParam = '';
+    newsFeed$ = this.articlesFacade.newsFeed$;
+    favorites: string[];
 
-    constructor(private newsFeedService: NewsFeedService) {}
+    constructor(private articlesFacade: ArticlesFacade) {}
 
     ngOnInit(): void {
-        this.changePage(this.currentPage);
+        this.articlesFacade.currentPage$.subscribe(page => {
+            this.currentPage = page;
+            this.loadNewsFeed(page);
+        });
+        this.articlesFacade.favorites$.subscribe(res => {
+            this.favorites = res;
+        });
     }
 
     loadNewsFeed(page: number): void {
-        this.newsFeedService.getNewsFeed(page, this.searchParam)
-            .subscribe(res => this.news = res.response.results);
-    }
-
-    changePage(pageNumber: number): void {
-        this.currentPage = pageNumber;
-        this.loadNewsFeed(this.currentPage);
+        this.articlesFacade.loadNewsFeed(page, this.searchParam);
     }
 
     filterNews(value: string): void {
         if (value === 'favorites') {
-            this.test();
+            this.articlesFacade.getFavoriteArticles(this.favorites);
             return;
         }
         this.searchParam = value;
         this.loadNewsFeed(1);
-    }
-
-    test() {
-        of(this.newsFeedService.favorites).pipe(
-            switchMap(ids => from(ids).pipe(
-                concatMap(id => forkJoin(
-                  this.newsFeedService.getArticle(id)
-                )),
-                map(item => item[0].response.content),
-                toArray(),
-              ))
-        ).subscribe(res => this.news = res);
     }
 }

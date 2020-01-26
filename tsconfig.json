@@ -20,7 +20,8 @@
     ],
     "paths" : {
       "@base/*": ["app/*"],
-      "@news/*": ["app/news-feed/*"]
+      "@news/*": ["app/news-feed/*"],
+      "@store/*": ["app/store/*"]
     },
   },
   "angularCompilerOptions": {

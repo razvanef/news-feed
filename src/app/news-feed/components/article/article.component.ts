@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { NewsFeedService } from '@news/services/news-feed.service';
+import { ArticlesFacade } from '@store/articles/articles.facade';
 
 @Component({
   selector: 'app-article',
@@ -9,17 +9,20 @@ import { NewsFeedService } from '@news/services/news-feed.service';
 })
 export class ArticleComponent implements OnInit {
   article: any;
+  article$ = this.articlesFacade.currentArticle$;
 
   constructor(
-    private newsFeedService: NewsFeedService,
+    private articlesFacade: ArticlesFacade,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
-      this.newsFeedService.getArticle(id).subscribe(res => this.article = res.response.content);
+      this.articlesFacade.getArticle(id);
     });
+
+    // this.articlesFacade.currentArticle$.subscribe(res => console.log(res));
   }
 
 }

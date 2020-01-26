@@ -1,4 +1,4 @@
-<mat-card class="article-card" *ngIf="article">
+<mat-card class="article-card" *ngIf="(article$ | async) as article">
     <mat-card-header class="article-card-content">
         <mat-card-title>
             {{article.webTitle}}
@@ -11,6 +11,7 @@
     <mat-card-actions class="article-card-actions">
         <a mat-raised-button [href]="article.webUrl" target="_blank">Read More</a>
         <app-favorite
+            *ngIf="article.id"
             [articleId]="article.id">
         </app-favorite>
     </mat-card-actions>

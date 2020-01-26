@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "news-feed"
+  "defaultProject": "news-feed",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
