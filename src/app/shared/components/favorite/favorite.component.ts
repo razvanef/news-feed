@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NewsFeedService } from '@news/services/news-feed.service';
+import { ArticlesFacade } from '@store/articles/articles.facade';
 
 @Component({
   selector: 'app-favorite',
@@ -10,30 +10,36 @@ import { NewsFeedService } from '@news/services/news-feed.service';
 export class FavoriteComponent {
 
   @Input() articleId: string;
+  favoritesNo: number;
+  isFavorite: boolean;
+  favorites$ = this.articlesFacade.favorites$;
 
   constructor(
-    private newsFeedService: NewsFeedService,
+    private articlesFacade: ArticlesFacade,
     private snackBar: MatSnackBar,
   ) {}
 
+  ngOnInit(): void {
+    this.favorites$.subscribe(favoritesList => {
+      this.favoritesNo = favoritesList.length;
+      console.log(this.articleId, favoritesList.indexOf(this.articleId) > -1)
+      this.isFavorite = favoritesList.indexOf(this.articleId) > -1;
+    });
+  }
+
   toggleSelected(): void {
-    if (!this.isFavorited()) {
-      if (this.newsFeedService.favorites.length === 9) {
+    if (!this.isFavorite) {
+      if (this.favoritesNo === 9) {
         this.snackBar.open('You can add to favorite only 10 articles!', 'OK', {
           duration: 2000,
         });
         return;
       }
 
-      this.newsFeedService.addToFavorites(this.articleId);
+      this.articlesFacade.addToFavorites(this.articleId);
       return;
     }
 
-    this.newsFeedService.removeFromFavorites(this.articleId);
+    this.articlesFacade.removeFromFavorites(this.articleId);
   }
-
-  isFavorited(): boolean {
-    return this.newsFeedService.favorites.indexOf(this.articleId) > -1;
-  }
-
 }

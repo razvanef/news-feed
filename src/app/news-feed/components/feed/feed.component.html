@@ -17,10 +17,10 @@
         </mat-button-toggle>
     </mat-button-toggle-group>
 
-    <div *ngIf="news">
+    <div *ngIf="newsFeed$ | async">
         <mat-list-item>
-            <app-feed-item mat-list-item *ngFor="let article of news" [article]="article"></app-feed-item>
+            <app-feed-item mat-list-item *ngFor="let article of newsFeed$ | async" [article]="article"></app-feed-item>
         </mat-list-item>
-        <app-pagination *ngIf="filter.value!=='favorites'" class="newsFeed-pagination" [pageNumber]="currentPage" (currentPage)="changePage($event)"></app-pagination>
+        <app-pagination *ngIf="filter.value!=='favorites'" class="newsFeed-pagination"></app-pagination>
     </div>
 </div>

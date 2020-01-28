@@ -1,13 +1,13 @@
 <button mat-icon-button (click)="toggleSelected()">
 
     <mat-icon
-      *ngIf="isFavorited()"
+      *ngIf="isFavorite"
       aria-label="Example icon-button with a heart icon">
       favorite
     </mat-icon>
   
     <mat-icon
-      *ngIf="!isFavorited()"
+      *ngIf="!isFavorite"
       aria-label="Example icon-button with a heart icon">
       favorite_border
     </mat-icon>
